@@ -1,6 +1,6 @@
-# Hash::Mapper
+# HashMapper
 
-Map hashes with style
+Map hashes with style.
 
 ## Installation
 
@@ -18,7 +18,102 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+An empty set of rules will filter all keys returning an empty hash.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27 } )
+```
+
+The `key` method will cause the mapper to keep the specified key without
+making any changes.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+  key :name
+end
+
+# => { name: 'Rodrigo' }
+```
+
+The `map_key` methods allows to define mappings for the hash keys.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+  map_key :name, :first_name
+end
+
+# => { first_name: 'Rodrigo' }
+```
+
+The `key` and `map_key` methods accept a `default` option. If the input hash
+doesn't have the key defined or if it's value is `nil`, then the default value
+will be set for that key on the returned hash.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+  map_key :name, :first_name, default: 'John Doe'
+  key :height, default: 1.90
+end
+
+# => { first_name: 'Rodrigo', height: 1.90 }
+```
+
+The `key` and `map_key` methods also accept a `cast_to` option. The
+possible alternatives are: `:integer`, `:string` and `:boolean`.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
+  key :age,       cast_to: :string
+  key :logged_in, cast_to: :boolean
+end
+
+# => { age: '27', looged_in: false }
+```
+
+The `scope` method allows to nest a hash within a key.
+
+```ruby
+HashMapper.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
+  scope :personal_info do
+    map_key :name, :first_name
+    key :age
+  end
+
+  key :logged_in
+end
+
+# => {
+#       personal_info: {
+#         first_name: 'Rodrigo',
+#         age: 27
+#       },
+#       logged_in: 'false'
+#    }
+```
+
+A good use case for this gem is to map the `ENV` hash into a more
+readable and usable hash.
+
+```ruby
+HashMapper.map(ENV) do
+  map_key 'EMAIL_NOTIFICATIONS', :send_email_notifications, cast_to: :boolean, default: true
+  map_key 'MAPS_API_AUTH_TOKEN', :api_auth_token
+
+  scope :database do
+    map_key 'POSTGRES_URL',      :url, default: 'localhost'
+    map_key 'PORT',              :port, cast_to: :integer, default: 5432
+  end
+end
+
+# => {
+#       send_email_notifications: true,
+#       api_auth_token: 'super-secret',
+#       database: {
+#         url: 'localhost',
+#         port: 5432
+#       }
+#    }
+```
 
 ## Contributing
 
