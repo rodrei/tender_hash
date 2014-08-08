@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe HashMapper::Map do
+describe TenderHash::Map do
   let(:hash) do { bob: 32, alice: 'cooper', johnny: '13' } end
-  let(:mapper) { HashMapper::Map.new(hash) }
+  let(:mapper) { TenderHash::Map.new(hash) }
 
   describe "#to_h" do
     context "given an empty source hash" do
       it "returns an new empty hash" do
         hash = {}
-        HashMapper::Map.new(hash).to_h.tap do |new_hash|
+        TenderHash::Map.new(hash).to_h.tap do |new_hash|
           expect( new_hash ).to be_empty
           expect( new_hash ).to_not equal hash
         end
@@ -18,7 +18,7 @@ describe HashMapper::Map do
     context "given no rules are specified" do
       it "returns an empty hash" do
         hash = { hello: 'there' }
-        expect( HashMapper::Map.new(hash).to_h ).to be_empty
+        expect( TenderHash::Map.new(hash).to_h ).to be_empty
       end
     end
   end

@@ -1,7 +1,7 @@
-require "hash_mapper/version"
-require "hash_mapper/map"
-require "hash_mapper/rule"
-require "hash_mapper/scope_rule"
+require "tender_hash/version"
+require "tender_hash/map"
+require "tender_hash/rule"
+require "tender_hash/scope_rule"
 
 module HashMapper
 

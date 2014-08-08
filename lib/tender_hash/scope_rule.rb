@@ -1,4 +1,4 @@
-module HashMapper
+module TenderHash
   class ScopeRule
 
     def initialize(key, &block)

@@ -1,4 +1,4 @@
-module HashMapper
+module TenderHash
   class Rule
 
     def initialize(old_key, new_key=nil, options={})

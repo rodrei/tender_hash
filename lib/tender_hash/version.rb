@@ -1,3 +1,3 @@
-module HashMapper
+module TenderHash
   VERSION = "0.0.1"
 end

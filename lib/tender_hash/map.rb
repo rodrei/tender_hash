@@ -1,4 +1,4 @@
-module HashMapper
+module TenderHash
   class Map
 
     def initialize(hash=nil, &block)

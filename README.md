@@ -1,4 +1,4 @@
-# HashMapper
+# TenderHash
 
 Map hashes with style.
 
@@ -6,7 +6,7 @@ Map hashes with style.
 
 Add this line to your application's Gemfile:
 
-    gem 'hash_mapper'
+    gem 'tender_hash'
 
 And then execute:
 
@@ -14,21 +14,21 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install hash_mapper
+    $ gem install tender_hash
 
 ## Usage
 
 An empty set of rules will filter all keys returning an empty hash.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27 } )
+TenderHash.map( { name: 'Rodrigo', age: 27 } )
 ```
 
 The `key` method will cause the mapper to keep the specified key without
 making any changes.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+TenderHash.map( { name: 'Rodrigo', age: 27 } ) do
   key :name
 end
 
@@ -38,7 +38,7 @@ end
 The `map_key` methods allows to define mappings for the hash keys.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+TenderHash.map( { name: 'Rodrigo', age: 27 } ) do
   map_key :name, :first_name
 end
 
@@ -50,7 +50,7 @@ doesn't have the key defined or if it's value is `nil`, then the default value
 will be set for that key on the returned hash.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27 } ) do
+TenderHash.map( { name: 'Rodrigo', age: 27 } ) do
   map_key :name, :first_name, default: 'John Doe'
   key :height, default: 1.90
 end
@@ -62,7 +62,7 @@ The `key` and `map_key` methods also accept a `cast_to` option. The
 possible alternatives are: `:integer`, `:string` and `:boolean`.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
+TenderHash.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
   key :age,       cast_to: :string
   key :logged_in, cast_to: :boolean
 end
@@ -73,7 +73,7 @@ end
 The `scope` method allows to nest a hash within a key.
 
 ```ruby
-HashMapper.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
+TenderHash.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
   scope :personal_info do
     map_key :name, :first_name
     key :age
@@ -95,7 +95,7 @@ A good use case for this gem is to map the `ENV` hash into a more
 readable and usable hash.
 
 ```ruby
-HashMapper.map(ENV) do
+TenderHash.map(ENV) do
   map_key 'EMAIL_NOTIFICATIONS', :send_email_notifications, cast_to: :boolean, default: true
   map_key 'MAPS_API_AUTH_TOKEN', :api_auth_token
 
@@ -117,7 +117,7 @@ end
 
 ## Contributing
 
-1. Fork it ( https://github.com/rodrei/hash_mapper/fork )
+1. Fork it ( https://github.com/rodrei/tender_hash/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
