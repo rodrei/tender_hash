@@ -1,6 +1,8 @@
 # TenderHash
 
-Map hashes with style.
+Map hashes with style. 
+
+[![Build Status](https://travis-ci.org/rodrei/tender_hash.svg?branch=master)](https://travis-ci.org/rodrei/tender_hash)
 
 ## Installation
 
