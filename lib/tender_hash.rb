@@ -3,7 +3,7 @@ require "tender_hash/map"
 require "tender_hash/rule"
 require "tender_hash/scope_rule"
 
-module HashMapper
+module TenderHash
 
   def self.map(hash, &block)
     raise ArgumentError unless block_given?
