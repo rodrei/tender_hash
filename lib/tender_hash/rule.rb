@@ -4,7 +4,7 @@ module TenderHash
     def initialize(old_key, new_key=nil, options={})
       @old_key = old_key
       @new_key = new_key || old_key
-      @cast_to = options[:cast_to] && options[:cast_to].to_sym
+      @cast_to = options[:cast_to]
       @default = options[:default]
     end
 
@@ -17,7 +17,8 @@ module TenderHash
     private
 
     def cast_value(val)
-      case @cast_to
+      return @cast_to.call(val) if @cast_to.respond_to?(:call)
+      case @cast_to && @cast_to.to_sym
       when :integer
         val.to_i
       when :string
