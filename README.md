@@ -61,15 +61,16 @@ end
 ```
 
 The `key` and `map_key` methods also accept a `cast_to` option. The
-possible alternatives are: `:integer`, `:string` and `:boolean`.
+possible alternatives are: `:integer`, `:string`, `:boolean` and any object that responds to `#call`.
 
 ```ruby
 TenderHash.map( { name: 'Rodrigo', age: 27, logged_in: 'false' } ) do
   key :age,       cast_to: :string
   key :logged_in, cast_to: :boolean
+  key :name,      cast_to: -> (v) { v.upcase }
 end
 
-# => { age: '27', looged_in: false }
+# => { age: '27', looged_in: false, name: 'RODRIGO' }
 ```
 
 The `scope` method allows to nest a hash within a key.
