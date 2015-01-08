@@ -35,6 +35,11 @@ describe TenderHash::Map do
     end
 
     describe "cast_to option" do
+      it "calls the given proc with the string and assigns the output to corresponding key" do
+        mapper.key :alice, cast_to: -> (v) { v.upcase }
+        expect( mapper.to_h ).to eql( alice: 'COOPER' )
+      end
+
       it "calls to_i on the mapped value if cast_to is set to integer" do
         mapper.key :johnny, cast_to: :integer
         expect( mapper.to_h ).to eql( johnny: 13 )
